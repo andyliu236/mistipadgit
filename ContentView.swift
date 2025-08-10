@@ -621,7 +621,9 @@ struct ThirdView: View {
                 imagePaths[i] = nil
             }
         }
-
+        
+        //this is commit test
+        
         questionSet.imagePaths = imagePaths.map { $0 ?? "" }
 
         if let idx = viewModel.savedSets.firstIndex(where: { $0.id == questionSet.id }) {
