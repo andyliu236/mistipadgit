@@ -343,18 +343,6 @@ struct RecentlyDeletedView: View {
                                         .foregroundColor(.green)
                                 }
                             }
-
-                            Button(action: {
-                                viewModel.permanentlyDeleteSet(set)
-                            }) {
-                                VStack {
-                                    Image(systemName: "trash.circle.fill")
-                                        .foregroundColor(.red)
-                                    Text("Delete")
-                                        .font(.caption2)
-                                        .foregroundColor(.red)
-                                }
-                            }
                         }
                     }
                 }
@@ -564,6 +552,15 @@ struct ThirdView: View {
             .onAppear {
                 syncArrays()
                 loadImagesFromDisk()
+                if questionSet.questions.isEmpty {
+                    questionSet.questions.append("")
+                    questionSet.answers.append("")
+                    selectedItems.append(nil)
+                    selectedImages.append(nil)
+                    imagePaths.append(nil)
+                    questionHeights.append(40)
+                    answerHeights.append(40)
+                }
             }
             .onDisappear {
                 removeBlankQuestions()
