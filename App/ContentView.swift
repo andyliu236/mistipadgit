@@ -566,6 +566,7 @@ struct ThirdView: View {
                 loadImagesFromDisk()
             }
             .onDisappear {
+                removeBlankQuestions()
                 saveSet()
             }
         }
@@ -610,6 +611,28 @@ struct ThirdView: View {
             return nil
         }
     }
+    private func removeBlankQuestions() {
+        var indicesToRemove: [Int] = []
+        
+        for i in questionSet.questions.indices {
+            if questionSet.questions[i].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+               questionSet.answers[i].trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+               (imagePaths[i] ?? "").isEmpty {
+                indicesToRemove.append(i)
+            }
+        }
+        
+        for index in indicesToRemove.sorted(by: >) {
+            questionSet.questions.remove(at: index)
+            questionSet.answers.remove(at: index)
+            selectedItems.remove(at: index)
+            selectedImages.remove(at: index)
+            imagePaths.remove(at: index)
+            questionHeights.remove(at: index)
+            answerHeights.remove(at: index)
+        }
+    }
+
 
     private func saveSet() {
         syncArrays()
